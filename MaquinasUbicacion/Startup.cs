@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using MaquinasUbicacion.Model;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
 
 namespace MaquinasUbicacion
 {
@@ -23,7 +19,11 @@ namespace MaquinasUbicacion
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddMvc();
+            
+            services.AddDbContext<maqUbiContext>(options => 
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,6 +33,15 @@ namespace MaquinasUbicacion
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(
+                //options => options.WithOrigins("http://localhost:4200").AllowAnyMethod()
+                options => options.WithOrigins("http://localhost:4200")
+                                  .AllowAnyHeader()
+                                  .AllowAnyMethod()
+                                  .AllowAnyOrigin()
+                                  .AllowCredentials()
+            );
 
             app.UseMvc();
         }
