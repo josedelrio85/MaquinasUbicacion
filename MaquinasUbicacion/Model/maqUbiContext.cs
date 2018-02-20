@@ -9,6 +9,9 @@ namespace MaquinasUbicacion.Model
 {
     public class maqUbiContext : DbContext
     {
+        public maqUbiContext()
+        {}
+
         public maqUbiContext(DbContextOptions<maqUbiContext> options) : base(options)
         {}
 

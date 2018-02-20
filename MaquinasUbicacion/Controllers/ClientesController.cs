@@ -16,7 +16,7 @@ namespace MaquinasUbicacion.Controllers
             _context = context;
         }
 
-        // GET api/values
+        // GET /api/clientes
         [HttpGet("", Name = "GetAllClientes")]
         public IEnumerable<Cliente> GetAll()
         {
@@ -24,7 +24,7 @@ namespace MaquinasUbicacion.Controllers
             return lista;
         }
 
-        // GET api/values/5
+        // GET api/clientes/5
         [HttpGet("{id}", Name = "GetClienteById")]
         public IActionResult GetById(int id)
         {
@@ -57,7 +57,7 @@ namespace MaquinasUbicacion.Controllers
             return lista;
         }
 
-        // POST api/values
+        // POST api/clientes
         [HttpPost]
         public IActionResult Create([FromBody]Cliente cliente)
         {
@@ -90,7 +90,9 @@ namespace MaquinasUbicacion.Controllers
 
             _context.Cliente.Update(element);
             _context.SaveChanges();
-            return new NoContentResult();
+            //return new NoContentResult();
+            return new ObjectResult(item);
+
         }
 
         [HttpDelete("{id}")]
